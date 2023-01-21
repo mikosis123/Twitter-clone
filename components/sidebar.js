@@ -1,15 +1,41 @@
-
+import Image from 'next/image'
+import image from "../public/images.png"
+import isk from "../public/isk.jpg"
+import Sidebarmenu from './sidebarmenu'
+import {HomeIcon} from '@heroicons/react/solid'
+import {BellIcon, BookmarkAltIcon, BookmarkIcon, ClipboardIcon, DotsCircleHorizontalIcon, DotsHorizontalIcon, HashtagIcon, InboxIcon, UserIcon} from '@heroicons/react/outline'
 
 export default function Sidebar() {
   return (
-    <div>
+    <>
         {/* twitter logo */}
-      <div>
-        <Image hight ="50 px" width ="40 px" src = "https://www.google.com/url?sa=i&url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FTwitter&psig=AOvVaw0Eriyff719jrGeDl4MBXi2&ust=1674070204787000&source=images&cd=vfe&ved=0CA0QjRxqFwoTCKDyud6rz_wCFQAAAAAdAAAAABAH"></Image>
+      <div className="">
+        <Image height ="50" width ="50" src = {image}></Image>
       </div>
-      <div></div>
-      <div></div>
-      <div></div>
-    </div>
+       {/* side bar menu items */}
+       <div className=''>
+       <Sidebarmenu text="Home" Icon={HomeIcon} />
+       <Sidebarmenu text="explore" Icon={HashtagIcon} />
+       <Sidebarmenu text="Notifications" Icon={BellIcon} />
+       <Sidebarmenu text="Messages" Icon={InboxIcon} />
+       <Sidebarmenu text="Bookmark" Icon={BookmarkIcon} />
+       <Sidebarmenu text="Lists" Icon={ClipboardIcon} />
+       <Sidebarmenu text="Profile" Icon={UserIcon} />
+       <Sidebarmenu text="More" Icon={DotsCircleHorizontalIcon} />
+       
+      </div>
+      {/* button */}
+      <div>
+        <button>tweet</button>
+      </div>
+      <div>
+        <Image height ="100" width ="100" src = {isk}></Image>
+        <div>
+          <h4>mikiyas sisay</h4>
+          <p>@ miko</p>
+        </div>
+        <DotsHorizontalIcon className='h-6' />
+      </div>
+    </>
   )
 }

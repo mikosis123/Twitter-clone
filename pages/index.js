@@ -18,6 +18,7 @@ export default function Home() {
 {/* side bar */}
 
 <Sidebar />
+
 {/* feed  */}
 {/* wedjets */}
 {/* modal */}
