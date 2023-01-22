@@ -9,7 +9,7 @@ export default function Sidebar() {
   return (
     <>
         {/* twitter logo */}
-      <div className="">
+      <div className="hoverEffect">
         <Image height ="50" width ="50" src = {image}></Image>
       </div>
        {/* side bar menu items */}
@@ -28,13 +28,13 @@ export default function Sidebar() {
       <div>
         <button>tweet</button>
       </div>
-      <div>
-        <Image height ="100" width ="100" src = {isk}></Image>
+      <div className='hoverEffect'>
+        <Image className='rounded-full' height ="100" width ="100" src = {isk}></Image>
         <div>
           <h4>mikiyas sisay</h4>
           <p>@ miko</p>
         </div>
-        <DotsHorizontalIcon className='h-6' />
+        <DotsHorizontalIcon className=' h-6' />
       </div>
     </>
   )
