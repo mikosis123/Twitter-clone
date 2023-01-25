@@ -26,9 +26,9 @@ export default function Sidebar() {
       </div>
       {/* button */}
       <div>
-        <button>tweet</button>
+        <button className='bg-blue-400 text-white rounded-full h-12 w-56 font-bold shadow-md hover:brightness-95 text-lg hidden lg:inline'>tweet</button>
       </div>
-      <div className='hoverEffect'>
+      <div className='hoverEffect text-gray-700'>
         <Image className='rounded-full' height ="100" width ="100" src = {isk}></Image>
         <div>
           <h4>mikiyas sisay</h4>
