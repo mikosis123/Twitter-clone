@@ -34,7 +34,7 @@ export default function Sidebar() {
           <h4 className='text-gray-600'>mikiyas sisay</h4>
           <p className='text-gray-500'>@ miko</p>
         </div>
-        <DotsHorizontalIcon className=' h-6 ml-5hidden xl:inline' />
+        <DotsHorizontalIcon className=' h-6 ml-5hidden xl:inline flex item-center justify-center' />
       </div>
     </div>
   )
