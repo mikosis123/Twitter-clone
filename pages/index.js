@@ -7,7 +7,7 @@ import Wedjet from '../components/Wedjet'
 
 
 
-export default function Home() {
+export default function Home({newresult}) {
   return (
     <>
       <Head>
@@ -24,7 +24,7 @@ export default function Home() {
 {/* feed  */}
 <Feed />
 {/* wedjets */}
-<Wedjet />
+<Wedjet newresult={newresult.articles} />
 {/* modal */}
 
 
@@ -32,4 +32,12 @@ export default function Home() {
       
     </>
   )
+}
+export async function getServerSideProps(){
+  const newresult =await fetch("https://saurav.tech/NewsAPI/top-headlines/category/technology/in.json").then((res)=>res.json())
+  return{
+      props:{
+          newresult,
+      }
+  }
 }
