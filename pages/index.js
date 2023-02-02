@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import Feed from '../components/feed'
 import Sidebar from '../components/sidebar'
+import Wedjet from '../components/Wedjet'
 
 
 
@@ -23,6 +24,7 @@ export default function Home() {
 {/* feed  */}
 <Feed />
 {/* wedjets */}
+<Wedjet />
 {/* modal */}
 
 
