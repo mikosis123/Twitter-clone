@@ -12,11 +12,11 @@ export default function Wedjet({newresult}) {
       </div>
     </div>
     <div className="text-gray-700 space-y-3 bg-gray-100 rounded-xl pt-2 w-[90%] xl:w-[75%]">
-      <h4>what's happening</h4>
+      <h4 className="font-bold text-xl px-4">what's happening</h4>
       {newresult.map((articles)=>(   
  <News title={articles.title} articles={articles} />
     ))}
-    <button>show more</button>
+    <button className="text-blue-300 pl-4 pb-3 hover:text-blue-400">show more</button>
     </div>
 
  
