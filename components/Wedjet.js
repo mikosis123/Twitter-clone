@@ -11,8 +11,7 @@ export default function Wedjet({newresult}) {
       </div>
     </div>
 
-    {newresult.map((articles)=>(
-        
+    {newresult.map((articles)=>(   
  <p>{articles.title}</p> 
     ))}
     
