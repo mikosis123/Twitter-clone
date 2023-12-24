@@ -1,5 +1,5 @@
 import { SearchIcon } from "@heroicons/react/outline";
-import { useState } from "react";
+import { useState, setState } from "react";
 import News from "./News";
 
 export default function Wedjet({ newresult }) {
@@ -21,7 +21,10 @@ export default function Wedjet({ newresult }) {
         {newresult.slice(0, Artnum).map((article) => (
           <News title={article.title} article={article} />
         ))}
-        <button className="text-blue-300 pl-4 pb-3 hover:text-blue-400">
+        <button
+          onClick={() => setArtnum(Artnum + 5)}
+          className="text-blue-300 pl-4 pb-3 hover:text-blue-400"
+        >
           show more
         </button>
       </div>
