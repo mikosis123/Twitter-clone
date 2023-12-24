@@ -3,7 +3,10 @@ export default function News({ article }) {
     <div>
       <a href={article.url} target="_blank">
         <div>
-          <div></div>
+          <div>
+            <h6>{article.title}</h6>
+            <p>{article.source.name}</p>
+          </div>
         </div>
       </a>
     </div>
