@@ -1,13 +1,9 @@
-import Head from 'next/head'
-import Feed from '../components/feed'
-import Sidebar from '../components/sidebar'
-import Wedjet from '../components/Wedjet'
+import Head from "next/head";
+import Feed from "../components/feed";
+import Sidebar from "../components/sidebar";
+import Wedjet from "../components/Wedjet";
 
-
-
-
-
-export default function Home({newresult}) {
+export default function Home({ newresult, randomusers }) {
   return (
     <>
       <Head>
@@ -16,28 +12,35 @@ export default function Home({newresult}) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className='flex min-h-screen max-w-7xl mx-auto'>
-{/* side bar */}
+      <main className="flex min-h-screen max-w-7xl mx-auto">
+        {/* side bar */}
 
-<Sidebar />
+        <Sidebar />
 
-{/* feed  */}
-<Feed />
-{/* wedjets */}
-<Wedjet newresult={newresult.articles} />
-{/* modal */}
-
-
+        {/* feed  */}
+        <Feed />
+        {/* wedjets */}
+        <Wedjet
+          newresult={newresult.articles}
+          randomusers={randomusers.results}
+        />
+        {/* modal */}
       </main>
-      
     </>
-  )
+  );
 }
-export async function getServerSideProps(){
-  const newresult =await fetch("https://saurav.tech/NewsAPI/top-headlines/category/technology/in.json").then((res)=>res.json())
-  return{
-      props:{
-          newresult,
-      }
-  }
+export async function getServerSideProps() {
+  const newresult = await fetch(
+    "https://saurav.tech/NewsAPI/top-headlines/category/technology/in.json"
+  ).then((res) => res.json());
+
+  const randomusers = await fetch(
+    "https://randomuser.me/api/?results=30&inc=name,login,picture"
+  ).then((res) => res.json());
+  return {
+    props: {
+      newresult,
+      randomusers,
+    },
+  };
 }
