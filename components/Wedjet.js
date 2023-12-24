@@ -28,6 +28,12 @@ export default function Wedjet({ newresult }) {
           show more
         </button>
       </div>
+      <div>
+        <h4 className="font-bold text-xl px-4">Who to follow</h4>
+        <button className="text-blue-300 pl-4 pb-3 hover:text-blue-400">
+          Show more
+        </button>
+      </div>
     </div>
   );
 }
