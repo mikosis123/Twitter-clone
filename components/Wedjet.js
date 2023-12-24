@@ -1,4 +1,5 @@
 import { SearchIcon } from "@heroicons/react/outline";
+import News from "./News";
 
 
 export default function Wedjet({newresult}) {
@@ -10,10 +11,15 @@ export default function Wedjet({newresult}) {
         <input type="text" placeholder="search tweeter" className=" pl-11 border-gray-500 text-gray-700 shadow-lg focus:bg-white bg-gray-100 inset-0 rounded-full absolute"/>
       </div>
     </div>
-
-    {newresult.map((articles)=>(   
- <p>{articles.title}</p> 
+    <div className="text-gray-700 space-y-3 bg-gray-100 rounded-xl pt-2 w-[90%] xl:w-[75%]">
+      <h4>what's happening</h4>
+      {newresult.map((articles)=>(   
+ <News title={articles.title} articles={articles} />
     ))}
+    <button>show more</button>
+    </div>
+
+ 
     
    
     </div>
