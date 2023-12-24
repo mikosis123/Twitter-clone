@@ -1,7 +1,11 @@
-export default function News({articles}) {
-    return(
+export default function News({ article }) {
+  return (
+    <div>
+      <a href={article.url} target="_blank">
         <div>
-<h4>  </h4>
+          <div></div>
         </div>
-    )
+      </a>
+    </div>
+  );
 }
