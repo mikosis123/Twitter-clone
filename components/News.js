@@ -1,15 +1,15 @@
-import Image from "next/image";
-
 export default function News({ article }) {
   return (
-    <div>
+    <div className="">
       <a href={article.url} target="_blank">
-        <div>
+        <div className="flex items-center justify-between px-4 py-2 space-x-1 hover:bg-gray-200 transition duration-500 ease-out">
           <div>
-            <h6>{article.title}</h6>
-            <p>{article.source.name}</p>
+            <h6 className="text-sm font-bold">{article.title}</h6>
+            <p className="text-xs font-medium text-gray-500">
+              {article.source.name}
+            </p>
           </div>
-          <img src={article.urlToImage} />
+          <img className="rounded-xl" width={70} src={article.urlToImage} />
         </div>
       </a>
     </div>
