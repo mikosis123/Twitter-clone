@@ -3,7 +3,7 @@ import image from "../public/images.png";
 import isk from "../public/isk.jpg";
 import Sidebarmenu from "./sidebarmenu";
 import { HomeIcon } from "@heroicons/react/solid";
-import { useSession } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
 import {
   BellIcon,
   BookmarkAltIcon,
@@ -28,7 +28,7 @@ export default function Sidebar() {
       <div className="mt-4 mb-2.4 xl:item-start">
         <Sidebarmenu text="Home" Icon={HomeIcon} active />
         <Sidebarmenu text="explore" Icon={HashtagIcon} />
-        {session && (
+        {session ? (
           <>
             <Sidebarmenu text="Notifications" Icon={BellIcon} />
             <Sidebarmenu text="Messages" Icon={InboxIcon} />
@@ -36,15 +36,23 @@ export default function Sidebar() {
             <Sidebarmenu text="Lists" Icon={ClipboardIcon} />
             <Sidebarmenu text="Profile" Icon={UserIcon} />
             <Sidebarmenu text="More" Icon={DotsCircleHorizontalIcon} />
+            <div>
+              <button className="bg-blue-400 text-white rounded-full h-12 w-56 font-bold shadow-md hover:brightness-95 text-lg hidden xl:inline">
+                tweet
+              </button>
+            </div>
           </>
+        ) : (
+          <button
+            onClick={signIn}
+            className="bg-blue-400 text-white rounded-full h-12 w-56 font-bold shadow-md hover:brightness-95 text-lg hidden xl:inline"
+          >
+            Sign in
+          </button>
         )}
       </div>
       {/* button */}
-      <div>
-        <button className="bg-blue-400 text-white rounded-full h-12 w-56 font-bold shadow-md hover:brightness-95 text-lg hidden xl:inline">
-          tweet
-        </button>
-      </div>
+
       <div className="hoverEffect flex item-center justify-center text-gray-700 xl:justify-start mt-auto">
         <Image
           className="rounded-full h-10 w-10 mr-2 mr-x-auto"
