@@ -12,7 +12,7 @@ function Signin({ providers }) {
 
       <div className="">
         {Object.values(providers).map((provider) => (
-          <div key={provider.username} className="flex flex-col items-center">
+          <div key={provider.name} className="flex flex-col items-center">
             <img
               className="w-36 object-cover"
               src="https://help.twitter.com/content/dam/help-twitter/brand/logo.png"
@@ -25,7 +25,7 @@ function Signin({ providers }) {
               onClick={() => signIn(provider.id, { callbackUrl: "/" })}
               className="bg-red-400 rounded-lg p-3 text-white hover:bg-red-500"
             >
-              Sign in with Google{console.log(provider)}
+              Sign in with Google
               {provider.name}
             </button>
           </div>
