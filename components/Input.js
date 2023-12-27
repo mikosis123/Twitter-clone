@@ -1,7 +1,7 @@
 import { EmojiHappyIcon, PhotographIcon } from "@heroicons/react/outline";
 import Image from "next/image";
 import picture from "../public/isk.jpg";
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 export default function Input() {
   const { data: session } = useSession;
   console.log(session);
@@ -10,7 +10,7 @@ export default function Input() {
       <Image
         className="rounded-full w-11 h-11 cursor-pointer hover:brightness-95"
         height={50}
-        src={picture}
+        src={session.user.image}
       ></Image>
       <div className="w-full divide-y divide-gray-200">
         <div>
