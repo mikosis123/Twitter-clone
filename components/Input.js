@@ -10,7 +10,7 @@ export default function Input() {
       <Image
         className="rounded-full w-11 h-11 cursor-pointer hover:brightness-95"
         height={50}
-        src={session.user.image}
+        src={picture}
       ></Image>
       <div className="w-full divide-y divide-gray-200">
         <div>
