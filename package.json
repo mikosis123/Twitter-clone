@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@clerk/nextjs": "^4.29.4",
     "@heroicons/react": "^1.0.6",
     "@next/font": "13.1.1",
     "firebase": "^10.7.1",
