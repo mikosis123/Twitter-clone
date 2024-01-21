@@ -3,7 +3,7 @@ import image from "../public/images.png";
 import isk from "../public/isk.jpg";
 import Sidebarmenu from "./sidebarmenu";
 import { HomeIcon } from "@heroicons/react/solid";
-import { useSession, signIn } from "next-auth/react";
+import { useSession, signIn, signOut } from "next-auth/react";
 import {
   BellIcon,
   BookmarkAltIcon,
@@ -57,6 +57,7 @@ export default function Sidebar() {
 
       <div className="hoverEffect flex item-center justify-center text-gray-700 xl:justify-start mt-auto">
         <Image
+          onClick={signOut}
           className="rounded-full h-10 w-10 mr-2 mr-x-auto"
           height="100"
           width="100"
@@ -64,7 +65,7 @@ export default function Sidebar() {
         ></Image>
         <div className="hidden xl:inline">
           <h4 className="text-gray-600">{session?.user.name}</h4>
-          <p className="text-gray-500">{session?.user.email}</p>
+          <p className="text-gray-500">@{session?.user.username}</p>
         </div>
         <DotsHorizontalIcon className=" h-6 ml-5hidden xl:inline flex item-center justify-center" />
       </div>

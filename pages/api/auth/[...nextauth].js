@@ -12,7 +12,7 @@ export default NextAuth({
         timeout: 10000,
       },
     }),
-    GitHubProvider({ 
+    GitHubProvider({
       clientId: "e6f3e809590418189528",
       clientSecret: "663f7ec818a248b10ebc1fd6a3046fa037872df8",
       httpOptions: {
@@ -24,5 +24,15 @@ export default NextAuth({
 
   pages: {
     signIn: "/auth/signin",
+  },
+  callbacks: {
+    async session({ session, token, user }) {
+      session.user.username = session.user.name
+        .split(" ")
+        .join("")
+        .toLocaleLowerCase();
+      session.user.uid = token.sub;
+      return session;
+    },
   },
 });
