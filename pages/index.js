@@ -29,7 +29,7 @@ export default function Home({ newresult, randomusers }) {
     </>
   );
 }
-export async function getServerSideProps() {
+export async function getServerSideProps(ctx) {
   const newresult = await fetch(
     "https://saurav.tech/NewsAPI/top-headlines/category/technology/in.json"
   ).then((res) => res.json());
@@ -37,6 +37,7 @@ export async function getServerSideProps() {
   const randomusers = await fetch(
     "https://randomuser.me/api/?results=30&inc=name,login,picture"
   ).then((res) => res.json());
+
   return {
     props: {
       newresult,
