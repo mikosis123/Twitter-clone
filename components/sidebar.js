@@ -17,7 +17,8 @@ import {
 } from "@heroicons/react/outline";
 
 export default function Sidebar() {
-  const { data: session } = useSession;
+  const { data: session } = useSession();
+  console.log(session);
   return (
     <div className="hidden sm:flex flex-col xl:items-start fixed h-full p-2">
       {/* twitter logo */}
@@ -28,6 +29,7 @@ export default function Sidebar() {
       <div className="mt-4 mb-2.4 xl:item-start">
         <Sidebarmenu text="Home" Icon={HomeIcon} active />
         <Sidebarmenu text="explore" Icon={HashtagIcon} />
+
         {session ? (
           <>
             <Sidebarmenu text="Notifications" Icon={BellIcon} />
@@ -61,8 +63,8 @@ export default function Sidebar() {
           src={isk}
         ></Image>
         <div className="hidden xl:inline">
-          <h4 className="text-gray-600">mikiyas sisay</h4>
-          <p className="text-gray-500">@ miko</p>
+          <h4 className="text-gray-600">{session?.user.name}</h4>
+          <p className="text-gray-500">{session?.user.email}</p>
         </div>
         <DotsHorizontalIcon className=" h-6 ml-5hidden xl:inline flex item-center justify-center" />
       </div>
