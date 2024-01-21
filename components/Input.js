@@ -13,7 +13,9 @@ export default function Input() {
   const sendPost = async () => {
     const addref = await addDoc(collection(db, "posts"), {
       id: session.user.uid,
-
+      username: session.user.name,
+      userImage: session.user.image,
+      timestamp: serverTimestamp(),
       text: Input,
     });
     setInput("");
