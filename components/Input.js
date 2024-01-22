@@ -1,15 +1,23 @@
 import { EmojiHappyIcon, PhotographIcon } from "@heroicons/react/outline";
 import Image from "next/image";
 import picture from "../public/isk.jpg";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
-import { db } from "../firebase";
+import {
+  addDoc,
+  collection,
+  doc,
+  serverTimestamp,
+  updateDoc,
+} from "firebase/firestore";
+import { db, storage } from "../firebase";
 import { useSession, signOut } from "next-auth/react";
 import { useState, useRef } from "react";
+import { getDownloadURL, ref, uploadString } from "firebase/storage";
 
 export default function Input() {
   const { data: session } = useSession();
   console.log(session);
   const [Input, setInput] = useState("");
+  const [selectedFile, setSelectedFile] = useState(null);
   const sendPost = async () => {
     const addref = await addDoc(collection(db, "posts"), {
       id: session.user.uid,
@@ -19,7 +27,18 @@ export default function Input() {
       timestamp: serverTimestamp(),
       text: Input,
     });
+    const imageref = ref(storage, `posts/${addref.id}/image`);
+    if (selectedFile) {
+      await uploadString(imageref, selectedFile, "data_url").then(async () => {
+        const downloadurl = await getDownloadURL(imageref);
+        await updateDoc(doc(db, "posts", addref.id), {
+          image: downloadurl,
+        });
+      });
+    }
+
     setInput("");
+    setSelectedFile(null);
   };
   const filepickerRef = useRef(null);
 
@@ -53,6 +72,9 @@ export default function Input() {
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="What's hapening"
               ></textarea>
+            </div>
+            <div>
+              <image src={selectedFile} alt="image " />
             </div>
             <div className=" flex item-center justify-between p-2.5">
               <div className="flex">
