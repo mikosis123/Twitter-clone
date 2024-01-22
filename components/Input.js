@@ -4,7 +4,7 @@ import picture from "../public/isk.jpg";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { db } from "../firebase";
 import { useSession, signOut } from "next-auth/react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 export default function Input() {
   const { data: session } = useSession();
@@ -13,12 +13,24 @@ export default function Input() {
   const sendPost = async () => {
     const addref = await addDoc(collection(db, "posts"), {
       id: session.user.uid,
+      name: session.user.name,
       username: session.user.name,
       userImage: session.user.image,
       timestamp: serverTimestamp(),
       text: Input,
     });
     setInput("");
+  };
+  const filepickerRef = useRef(null);
+
+  const addimagetopost = (e) => {
+    const reader = new FileReader();
+    if (e.target.files[0]) {
+      reader.readAsDataURL(e.target.files[0]);
+    }
+    reader.onload = (readerEvent) => {
+      setSelectedFile(readerEvent.target.result);
+    };
   };
 
   return (
@@ -44,7 +56,15 @@ export default function Input() {
             </div>
             <div className=" flex item-center justify-between p-2.5">
               <div className="flex">
-                <PhotographIcon className="h-10 w-10 hoverEffect p-2 text-sky-500 hover:bg-sky-200" />
+                <div onClick={() => filepickerRef.current.click()}>
+                  <PhotographIcon className="h-10 w-10 hoverEffect p-2 text-sky-500 hover:bg-sky-200" />
+                  <input
+                    type="file"
+                    hidden
+                    ref={filepickerRef}
+                    onClick={addimagetopost}
+                  />
+                </div>
                 <EmojiHappyIcon className="h-10 w-10 hoverEffect p-2 text-sky-500 hover:bg-sky-200" />
               </div>
               <button
