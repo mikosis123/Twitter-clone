@@ -13,8 +13,8 @@ export default NextAuth({
       },
     }),
     GitHubProvider({
-      clientId: "e6f3e809590418189528",
-      clientSecret: "663f7ec818a248b10ebc1fd6a3046fa037872df8",
+      clientId: GITHUB_CLIENT_ID,
+      clientSecret: GITHUB_CLIENT_SECRET,
       httpOptions: {
         timeout: 10000,
       },
