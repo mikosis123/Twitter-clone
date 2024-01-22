@@ -12,13 +12,13 @@ export default NextAuth({
         timeout: 10000,
       },
     }),
-    GitHubProvider({
-      clientId: GITHUB_CLIENT_ID,
-      clientSecret: GITHUB_CLIENT_SECRET,
-      httpOptions: {
-        timeout: 10000,
-      },
-    }),
+    // GitHubProvider({
+    //   clientId: GITHUB_CLIENT_ID,
+    //   clientSecret: GITHUB_CLIENT_SECRET,
+    //   httpOptions: {
+    //     timeout: 10000,
+    //   },
+    // }),
     // ...add more providers here
   ],
 
