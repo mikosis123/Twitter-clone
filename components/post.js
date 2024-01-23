@@ -7,8 +7,17 @@ import {
   TrashIcon,
 } from "@heroicons/react/outline";
 import Moment from "react-moment";
+import { useSession } from "next-auth/react";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "../firebase";
 
 export default function Post({ post }) {
+  const { data: session } = useSession();
+  function likepost() {
+    setDoc(doc(db, "posts", post.id, "likes", session.user.uid), {
+      username: session.user.username,
+    });
+  }
   return (
     <div className="flex cursor-pointer border-b border-gray-200">
       {/* image */}
@@ -48,7 +57,10 @@ export default function Post({ post }) {
         <div className="flex items-center justify-between">
           <ChatIcon className="h-9 w-9 hoverEffect p-2 hover:text-sky-500 hover:bg-blue-100 text-gray-700" />
           <TrashIcon className="h-9 w-9 hoverEffect p-2 hover:text-red-600 hover:bg-red-100 text-gray-700" />
-          <HeartIcon className="h-9 w-9 hoverEffect p-2 hover:text-red-600 hover:bg-red-100 text-gray-700" />
+          <HeartIcon
+            onClick={likepost}
+            className="h-9 w-9 hoverEffect p-2 hover:text-red-600 hover:bg-red-100 text-gray-700"
+          />
           <ShareIcon className="h-9 w-9 hoverEffect p-2 hover:text-sky-500 hover:bg-blue-100 text-gray-700" />
           <ChartBarIcon className="h-9 w-9 hoverEffect p-2 hover:text-sky-500 hover-blue:bg-100 text-gray-700" />
         </div>
