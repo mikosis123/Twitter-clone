@@ -3,6 +3,7 @@ import Input from "./Input";
 import Posts from "./post";
 import { useEffect, useState } from "react";
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
+import { db } from "../firebase";
 
 export default function Feed() {
   const [posts, setPosts] = useState([]);
