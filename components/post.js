@@ -6,13 +6,30 @@ import {
   ShareIcon,
   TrashIcon,
 } from "@heroicons/react/outline";
+import { HeartIcon as HeartIconFilled } from "@heroicons/react/solid";
 import Moment from "react-moment";
 import { useSession } from "next-auth/react";
-import { doc, setDoc } from "firebase/firestore";
+import { collection, doc, onSnapshot, setDoc } from "firebase/firestore";
 import { db } from "../firebase";
+
+import { useState, useEffect } from "react";
 
 export default function Post({ post }) {
   const { data: session } = useSession();
+  const [liked, setLiked] = useState([]);
+  const [hasLiked, setHasLiked] = useState([]);
+  useEffect(() => {
+    const unsubscribe = onSnapshot(
+      collection(db, "posts", post.id, "likes"),
+      (snapshot) => setLiked(snapshot.docs),
+      {}
+    );
+  }, [db]);
+  useEffect(() => {
+    setHasLiked(
+      liked.findIndex((like) => like.id === session?.user?.uid) !== -1
+    );
+  }, [liked]);
   function likepost() {
     setDoc(doc(db, "posts", post.id, "likes", session.user.uid), {
       username: session.user.username,
@@ -57,10 +74,19 @@ export default function Post({ post }) {
         <div className="flex items-center justify-between">
           <ChatIcon className="h-9 w-9 hoverEffect p-2 hover:text-sky-500 hover:bg-blue-100 text-gray-700" />
           <TrashIcon className="h-9 w-9 hoverEffect p-2 hover:text-red-600 hover:bg-red-100 text-gray-700" />
-          <HeartIcon
-            onClick={likepost}
-            className="h-9 w-9 hoverEffect p-2 hover:text-red-600 hover:bg-red-100 text-gray-700"
-          />
+
+          {hasLiked ? (
+            <HeartIconFilled
+              onClick={likepost}
+              className="h-9 w-9 hoverEffect p-2 hover:text-red-600 text-red-600 hover:bg-red-100 "
+            />
+          ) : (
+            <HeartIcon
+              onClick={likepost}
+              className="h-9 w-9 hoverEffect p-2 hover:text-red-600 hover:bg-red-100 text-gray-700"
+            />
+          )}
+
           <ShareIcon className="h-9 w-9 hoverEffect p-2 hover:text-sky-500 hover:bg-blue-100 text-gray-700" />
           <ChartBarIcon className="h-9 w-9 hoverEffect p-2 hover:text-sky-500 hover-blue:bg-100 text-gray-700" />
         </div>
