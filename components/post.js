@@ -20,11 +20,14 @@ import { db } from "../firebase";
 
 import { useState, useEffect } from "react";
 import { ref, deleteObject } from "firebase/storage";
+import { useRecoilState } from "recoil";
+import { modalState } from "../Atom/Atommodal";
 
 export default function Post({ post }) {
   const { data: session } = useSession();
   const [liked, setLiked] = useState([]);
   const [hasLiked, setHasLiked] = useState([]);
+  const [open, setOpen] = useRecoilState(modalState);
   useEffect(() => {
     const unsubscribe = onSnapshot(
       collection(db, "posts", post.id, "likes"),
@@ -94,7 +97,10 @@ export default function Post({ post }) {
 
         {/* user responses */}
         <div className="flex items-center justify-between">
-          <ChatIcon className="h-9 w-9 hoverEffect p-2 hover:text-sky-500 hover:bg-blue-100 text-gray-700" />
+          <ChatIcon
+            onClick={() => setOpen(!open)}
+            className="h-9 w-9 hoverEffect p-2 hover:text-sky-500 hover:bg-blue-100 text-gray-700"
+          />
           {session?.user?.uid === post?.data().id && (
             <TrashIcon
               onClick={deletePost}
