@@ -2,6 +2,7 @@ import Head from "next/head";
 import Feed from "../components/feed";
 import Sidebar from "../components/sidebar";
 import Wedjet from "../components/Wedjet";
+import CommentModal from "../components/CommentModal";
 
 export default function Home({ newresult, randomusers }) {
   return (
@@ -25,6 +26,7 @@ export default function Home({ newresult, randomusers }) {
           randomusers={randomusers.results}
         />
         {/* modal */}
+        <CommentModal />
       </main>
     </>
   );
