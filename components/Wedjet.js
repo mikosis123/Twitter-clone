@@ -1,5 +1,6 @@
 import { SearchIcon } from "@heroicons/react/outline";
 import { useState, setState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import News from "./News";
 
 export default function Wedjet({ newresult, randomusers }) {
@@ -19,9 +20,19 @@ export default function Wedjet({ newresult, randomusers }) {
       </div>
       <div className="text-gray-700 space-y-3 bg-gray-100 rounded-xl pt-2 w-[90%] xl:w-[75%]">
         <h4 className="font-bold text-xl px-4">what's happening</h4>
-        {newresult.slice(0, Artnum).map((article) => (
-          <News title={article.title} article={article} />
-        ))}
+        <AnimatePresence>
+          {newresult.slice(0, Artnum).map((article) => (
+            <motion.div
+              key={article.id}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1 }}
+            >
+              <News title={article.title} article={article} />
+            </motion.div>
+          ))}
+        </AnimatePresence>
         <button
           onClick={() => setArtnum(Artnum + 5)}
           className="text-blue-300 pl-4 pb-3 hover:text-blue-400"
@@ -31,34 +42,44 @@ export default function Wedjet({ newresult, randomusers }) {
       </div>
       <div className="text-gray-700 space-y-3 bg-gray-100 rounded-xl pt-2 w-[90%] xl:w-[75%]">
         <h4 className="font-bold text-xl px-4">Who to follow</h4>
-        {randomusers.slice(0, Numrusers).map((rusers) => {
-          return (
-            <div key={rusers.login.username}>
-              <div
-                key={rusers.login.username}
-                className="flex items-center px-4 py-2  cursor-pointer hover:bg-gray-200 transition duration-500 ease-out"
+        <AnimatePresence>
+          {randomusers.slice(0, Numrusers).map((rusers) => {
+            return (
+              <motion.div
+                key={rusers.id}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 1 }}
               >
-                <img
-                  className="rounded-full"
-                  width="40"
-                  src={rusers.picture.thumbnail}
-                  alt=""
-                />
-                <div className="truncate ml-4 leading-5">
-                  <h4 className="font-bold hover:underline text-[14px] truncate">
-                    {rusers.login.username}
-                  </h4>
-                  <h5 className="text-[13px] text-gray-500 truncate">
-                    {rusers.name.first + " " + rusers.name.last}
-                  </h5>
+                <div key={rusers.login.username}>
+                  <div
+                    key={rusers.login.username}
+                    className="flex items-center px-4 py-2  cursor-pointer hover:bg-gray-200 transition duration-500 ease-out"
+                  >
+                    <img
+                      className="rounded-full"
+                      width="40"
+                      src={rusers.picture.thumbnail}
+                      alt=""
+                    />
+                    <div className="truncate ml-4 leading-5">
+                      <h4 className="font-bold hover:underline text-[14px] truncate">
+                        {rusers.login.username}
+                      </h4>
+                      <h5 className="text-[13px] text-gray-500 truncate">
+                        {rusers.name.first + " " + rusers.name.last}
+                      </h5>
+                    </div>
+                    <button className="ml-auto bg-black text-white rounded-full text-sm px-3.5 py-1.5 font-bold">
+                      Follow
+                    </button>
+                  </div>
                 </div>
-                <button className="ml-auto bg-black text-white rounded-full text-sm px-3.5 py-1.5 font-bold">
-                  Follow
-                </button>
-              </div>
-            </div>
-          );
-        })}
+              </motion.div>
+            );
+          })}
+        </AnimatePresence>
         <button
           onClick={() => {
             setNumrusers(Numrusers + 5);
