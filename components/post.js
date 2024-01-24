@@ -9,7 +9,13 @@ import {
 import { HeartIcon as HeartIconFilled } from "@heroicons/react/solid";
 import Moment from "react-moment";
 import { useSession } from "next-auth/react";
-import { collection, doc, onSnapshot, setDoc } from "firebase/firestore";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  onSnapshot,
+  setDoc,
+} from "firebase/firestore";
 import { db } from "../firebase";
 
 import { useState, useEffect } from "react";
@@ -31,9 +37,13 @@ export default function Post({ post }) {
     );
   }, [liked]);
   function likepost() {
-    setDoc(doc(db, "posts", post.id, "likes", session.user.uid), {
-      username: session.user.username,
-    });
+    if (hasLiked) {
+      deleteDoc(doc(db, "posts", post.id, "likes", session.user.uid), {});
+    } else {
+      setDoc(doc(db, "posts", post.id, "likes", session.user.uid), {
+        username: session.user.username,
+      });
+    }
   }
   return (
     <div className="flex cursor-pointer border-b border-gray-200">
