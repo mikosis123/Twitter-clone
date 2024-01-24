@@ -49,6 +49,9 @@ export default function Post({ post }) {
       signIn();
     }
   }
+  function deletePost() {
+    deleteDoc(doc(db, "posts", post.id));
+  }
   return (
     <div className="flex cursor-pointer border-b border-gray-200">
       {/* image */}
@@ -88,7 +91,10 @@ export default function Post({ post }) {
         <div className="flex items-center justify-between">
           <ChatIcon className="h-9 w-9 hoverEffect p-2 hover:text-sky-500 hover:bg-blue-100 text-gray-700" />
           {session?.user?.uid === post?.data().id && (
-            <TrashIcon className="h-9 w-9 hoverEffect p-2 hover:text-red-600 hover:bg-red-100 text-gray-700" />
+            <TrashIcon
+              onClick={deletePost}
+              className="h-9 w-9 hoverEffect p-2 hover:text-red-600 hover:bg-red-100 text-gray-700"
+            />
           )}
           {hasLiked ? (
             <HeartIconFilled
