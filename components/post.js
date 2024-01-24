@@ -87,8 +87,9 @@ export default function Post({ post }) {
         {/* user responses */}
         <div className="flex items-center justify-between">
           <ChatIcon className="h-9 w-9 hoverEffect p-2 hover:text-sky-500 hover:bg-blue-100 text-gray-700" />
-          <TrashIcon className="h-9 w-9 hoverEffect p-2 hover:text-red-600 hover:bg-red-100 text-gray-700" />
-
+          {session?.user?.uid === post?.data().id && (
+            <TrashIcon className="h-9 w-9 hoverEffect p-2 hover:text-red-600 hover:bg-red-100 text-gray-700" />
+          )}
           {hasLiked ? (
             <HeartIconFilled
               onClick={likepost}
@@ -105,7 +106,6 @@ export default function Post({ post }) {
               {liked?.length}
             </span>
           )}
-
           <ShareIcon className="h-9 w-9 hoverEffect p-2 hover:text-sky-500 hover:bg-blue-100 text-gray-700" />
           <ChartBarIcon className="h-9 w-9 hoverEffect p-2 hover:text-sky-500 hover-blue:bg-100 text-gray-700" />
         </div>
