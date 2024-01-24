@@ -19,6 +19,7 @@ import {
 import { db } from "../firebase";
 
 import { useState, useEffect } from "react";
+import { ref, deleteObject } from "firebase/storage";
 
 export default function Post({ post }) {
   const { data: session } = useSession();
@@ -50,7 +51,9 @@ export default function Post({ post }) {
     }
   }
   function deletePost() {
-    deleteDoc(doc(db, "posts", post.id));
+    if (window.confirm("Are you sure you want to delete this post?"))
+      deleteDoc(doc(db, "posts", post.id));
+    deleteObject(ref(storage, `posts/${post.id}/image`));
   }
   return (
     <div className="flex cursor-pointer border-b border-gray-200">
