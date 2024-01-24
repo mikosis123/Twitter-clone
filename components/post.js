@@ -96,6 +96,11 @@ export default function Post({ post }) {
               className="h-9 w-9 hoverEffect p-2 hover:text-red-600 hover:bg-red-100 text-gray-700"
             />
           )}
+          {liked.length > 0 && (
+            <span className={hasLiked ? "text-red-600" : "text-gray-700"}>
+              {liked?.length}
+            </span>
+          )}
 
           <ShareIcon className="h-9 w-9 hoverEffect p-2 hover:text-sky-500 hover:bg-blue-100 text-gray-700" />
           <ChartBarIcon className="h-9 w-9 hoverEffect p-2 hover:text-sky-500 hover-blue:bg-100 text-gray-700" />
