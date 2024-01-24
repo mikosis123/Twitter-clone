@@ -8,7 +8,7 @@ import {
 } from "@heroicons/react/outline";
 import { HeartIcon as HeartIconFilled } from "@heroicons/react/solid";
 import Moment from "react-moment";
-import { useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import {
   collection,
   deleteDoc,
@@ -37,12 +37,16 @@ export default function Post({ post }) {
     );
   }, [liked]);
   function likepost() {
-    if (hasLiked) {
-      deleteDoc(doc(db, "posts", post.id, "likes", session.user.uid), {});
+    if (session) {
+      if (hasLiked) {
+        deleteDoc(doc(db, "posts", post.id, "likes", session.user.uid), {});
+      } else {
+        setDoc(doc(db, "posts", post.id, "likes", session.user.uid), {
+          username: session.user.username,
+        });
+      }
     } else {
-      setDoc(doc(db, "posts", post.id, "likes", session.user.uid), {
-        username: session.user.username,
-      });
+      signIn();
     }
   }
   return (
