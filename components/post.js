@@ -23,7 +23,7 @@ import { ref, deleteObject } from "firebase/storage";
 import { useRecoilState } from "recoil";
 import { modalState, postIdState } from "../Atom/Atommodal";
 
-export default function Post({ post }) {
+export default function Post({ post, id }) {
   const { data: session } = useSession();
   const [liked, setLiked] = useState([]);
 
@@ -33,14 +33,14 @@ export default function Post({ post }) {
   const [postId, setpostId] = useRecoilState(postIdState);
   useEffect(() => {
     const unsubscribe = onSnapshot(
-      collection(db, "posts", post.id, "likes"),
+      collection(db, "posts", id, "likes"),
       (snapshot) => setLiked(snapshot.docs),
       {}
     );
   }, [db]);
   useEffect(() => {
     const unsubscribe = onSnapshot(
-      collection(db, "posts", post.id, "comment"),
+      collection(db, "posts", id, "comment"),
       (snapshot) => setComment(snapshot.docs),
       {}
     );
@@ -53,9 +53,9 @@ export default function Post({ post }) {
   function likepost() {
     if (session) {
       if (hasLiked) {
-        deleteDoc(doc(db, "posts", post.id, "likes", session.user.uid), {});
+        deleteDoc(doc(db, "posts", id, "likes", session.user.uid), {});
       } else {
-        setDoc(doc(db, "posts", post.id, "likes", session.user.uid), {
+        setDoc(doc(db, "posts", id, "likes", session.user.uid), {
           username: session.user.username,
         });
       }
@@ -65,9 +65,9 @@ export default function Post({ post }) {
   }
   function deletePost() {
     if (window.confirm("Are you sure you want to delete this post?"))
-      deleteDoc(doc(db, "posts", post.id));
+      deleteDoc(doc(db, "posts", id));
     if (post.data().image) {
-      deleteObject(ref(storage, `posts/${post.id}/image`));
+      deleteObject(ref(storage, `posts/${id}/image`));
     }
   }
   return (
@@ -88,7 +88,7 @@ export default function Post({ post }) {
               {post?.data().name}
             </h4>
             <span className="text-sm sm:text[15px]">
-              {post.data().username}
+              {post?.data().username}
             </span>
             <span className="text-sm sm:text-[15px] hover:underline">
               <Moment fromNow>{post?.timestamp?.toDate()}</Moment>
@@ -100,43 +100,53 @@ export default function Post({ post }) {
 
         {/* post text */}
         <p className="text-gray-800 text-[15px] sm:text-[16] p-2">
-          {post.data().text}
+          {post?.data().text}
         </p>
         {/* post image */}
-        <img className="rounded-2xl  " src={post.data().image} />
+        <img className="rounded-2xl  " src={post?.data().image} />
 
         {/* user responses */}
         <div className="flex items-center justify-between">
-          <ChatIcon
-            onClick={() => {
-              setpostId(post.id);
-              setOpen(!open);
-            }}
-            className="h-9 w-9 hoverEffect  hover:text-sky-500 hover:bg-blue-100 text-gray-700"
-          />
-          {comment.length > 0 && <span>{comment.length}</span>}
+          <div className=" flex item-center select-nones">
+            <ChatIcon
+              onClick={() => {
+                setpostId(id);
+                setOpen(!open);
+              }}
+              className="h-9 w-9 hoverEffect p-2 hover:text-sky-500 hover:bg-blue-100 text-gray-700"
+            />
+            {comment.length > 0 && (
+              <span className="mt-2">{comment.length}</span>
+            )}
+          </div>
           {session?.user?.uid === post?.data().id && (
             <TrashIcon
               onClick={deletePost}
               className="h-9 w-9 hoverEffect p-2 hover:text-red-600 hover:bg-red-100 text-gray-700"
             />
           )}
-          {hasLiked ? (
-            <HeartIconFilled
-              onClick={likepost}
-              className="h-9 w-9 hoverEffect p-2 hover:text-red-600 text-red-600 hover:bg-red-100 "
-            />
-          ) : (
-            <HeartIcon
-              onClick={likepost}
-              className="h-9 w-9 hoverEffect p-2 hover:text-red-600 hover:bg-red-100 text-gray-700"
-            />
-          )}
-          {liked.length > 0 && (
-            <span className={hasLiked ? "text-red-600" : "text-gray-700"}>
-              {liked?.length}
-            </span>
-          )}
+          <div className=" flex item-center select-nones">
+            {hasLiked ? (
+              <HeartIconFilled
+                onClick={likepost}
+                className="h-9 w-9 hoverEffect p-2 hover:text-red-600 text-red-600 hover:bg-red-100 "
+              />
+            ) : (
+              <HeartIcon
+                onClick={likepost}
+                className="h-9 w-9 hoverEffect p-2 hover:text-red-600 hover:bg-red-100 text-gray-700"
+              />
+            )}
+            {liked.length > 0 && (
+              <span
+                className={
+                  hasLiked ? "text-red-600 mt-2" : "text-gray-700 mt-2"
+                }
+              >
+                {liked?.length}
+              </span>
+            )}
+          </div>
           <ShareIcon className="h-9 w-9 hoverEffect p-2 hover:text-sky-500 hover:bg-blue-100 text-gray-700" />
           <ChartBarIcon className="h-9 w-9 hoverEffect p-2 hover:text-sky-500 hover-blue:bg-100 text-gray-700" />
         </div>
