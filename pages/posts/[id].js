@@ -72,6 +72,7 @@ export default function Home({ newresult, randomusers }) {
               <Comment
                 key={comment.id}
                 commentId={comment.id}
+                originalPostId={id}
                 comment={comment.data()}
               />
             ))}
