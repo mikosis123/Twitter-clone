@@ -31,12 +31,11 @@ export default function CommentModal() {
 
   const [input, setInput] = useState("");
   const router = useRouter();
-
-  useEffect(() => {
-    onSnapshot(doc(db, "posts", postId), (snapshot) => {
-      setPosts(snapshot);
-    });
-  }, [postId, db]);
+  useEffect(
+    () =>
+      onSnapshot(doc(db, "posts", postId), (snapshot) => setPosts(snapshot)),
+    [db, postId]
+  );
   // console.log(post);
   // useEffect(
   //   () =>
