@@ -15,6 +15,7 @@ import {
 import { useRouter } from "next/router";
 import { useState, useEffect, Component } from "react";
 import { db } from "../../firebase";
+import CommentModal from "../../components/CommentModal";
 
 export default function Home({ newresult, randomusers }) {
   const router = useRouter();
@@ -84,7 +85,7 @@ export default function Home({ newresult, randomusers }) {
           newresult={newresult.articles}
           randomusers={randomusers.results}
         />
-
+        <CommentModal />
         {/* modal */}
       </main>
     </>
