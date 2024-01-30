@@ -19,7 +19,6 @@ import { getDownloadURL, ref, uploadString } from "firebase/storage";
 
 export default function Input() {
   const { data: session } = useSession();
-  console.log(session);
   const [Input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);

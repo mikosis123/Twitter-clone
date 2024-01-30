@@ -21,17 +21,27 @@ import { db } from "../firebase";
 import { useState, useEffect } from "react";
 import { ref, deleteObject } from "firebase/storage";
 import { useRecoilState } from "recoil";
-import { modalState } from "../Atom/Atommodal";
+import { modalState, postIdState } from "../Atom/Atommodal";
 
 export default function Post({ post }) {
   const { data: session } = useSession();
   const [liked, setLiked] = useState([]);
+
+  const [comment, setComment] = useState([]);
   const [hasLiked, setHasLiked] = useState([]);
   const [open, setOpen] = useRecoilState(modalState);
+  const [postId, setpostId] = useRecoilState(postIdState);
   useEffect(() => {
     const unsubscribe = onSnapshot(
       collection(db, "posts", post.id, "likes"),
       (snapshot) => setLiked(snapshot.docs),
+      {}
+    );
+  }, [db]);
+  useEffect(() => {
+    const unsubscribe = onSnapshot(
+      collection(db, "posts", post.id, "comment"),
+      (snapshot) => setComment(snapshot.docs),
       {}
     );
   }, [db]);
@@ -98,9 +108,13 @@ export default function Post({ post }) {
         {/* user responses */}
         <div className="flex items-center justify-between">
           <ChatIcon
-            onClick={() => setOpen(!open)}
-            className="h-9 w-9 hoverEffect p-2 hover:text-sky-500 hover:bg-blue-100 text-gray-700"
+            onClick={() => {
+              setpostId(post.id);
+              setOpen(!open);
+            }}
+            className="h-9 w-9 hoverEffect  hover:text-sky-500 hover:bg-blue-100 text-gray-700"
           />
+          {comment.length > 0 && <span>{comment.length}</span>}
           {session?.user?.uid === post?.data().id && (
             <TrashIcon
               onClick={deletePost}

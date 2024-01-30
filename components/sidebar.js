@@ -18,7 +18,7 @@ import {
 
 export default function Sidebar() {
   const { data: session } = useSession();
-  console.log(session);
+  // console.log(session);
   return (
     <div className="hidden sm:flex flex-col xl:items-start fixed h-full p-2">
       {/* twitter logo */}
