@@ -14,33 +14,48 @@ import {
   collection,
   doc,
   onSnapshot,
+  orderBy,
+  query,
   serverTimestamp,
 } from "firebase/firestore";
 import Moment from "react-moment";
 import { userState } from "../Atom/userAtom";
+import { useSession } from "next-auth/react";
 export default function CommentModal() {
   const [open, setOpen] = useRecoilState(modalState);
-  const [postId] = useRecoilState(postIdState);
+  const [postId, setpostId] = useRecoilState(postIdState);
 
   const [currentUser] = useRecoilState(userState);
-  const [post, setPost] = useState({});
+  const [post, setPosts] = useState({});
+  const { data: session } = useSession();
+
   const [input, setInput] = useState("");
   const router = useRouter();
 
   useEffect(() => {
     onSnapshot(doc(db, "posts", postId), (snapshot) => {
-      setPost(snapshot);
+      setPosts(snapshot);
     });
   }, [postId, db]);
+  // console.log(post);
+  // useEffect(
+  //   () =>
+  //     onSnapshot(
+  //       query(collection(db, "posts"), orderBy("timestamp", "desc")),
+  //       (snapshot) => {
+  //         setPosts(snapshot.docs);
+  //       }
+  //     ),
+  //   []
+  // );
 
   async function sendComment() {
-    await addDoc(collection(db, "posts", postId, "comments"), {
+    await addDoc(collection(db, "posts", postId, "comment"), {
       comment: input,
-      name: currentUser.name,
-      username: currentUser.username,
-      userImg: currentUser.userImg,
+      name: session.user.name,
+      username: session.user.username,
+      userImage: session.user.image,
       timestamp: serverTimestamp(),
-      userId: currentUser.uid,
     });
 
     setOpen(false);
@@ -69,7 +84,7 @@ export default function CommentModal() {
               <span className="w-0.5 h-full z-[-1] absolute left-8 top-11 bg-gray-300" />
               <img
                 className="h-11 w-11 rounded-full mr-4"
-                src={post?.data()?.userImg}
+                src={post?.data()?.userImage}
                 alt="user-img"
               />
               <h4 className="font-bold text-[15px] sm:text-[16px] hover:underline">
@@ -87,11 +102,11 @@ export default function CommentModal() {
             </p>
 
             <div className="flex  p-3 space-x-3">
-              {/* <img
-                src={currentUser.data()?.userImg}
+              <img
+                src={post.data()?.userImage}
                 alt="user-img"
                 className="h-11 w-11 rounded-full cursor-pointer hover:brightness-95"
-              /> */}
+              />
               <div className="w-full divide-y divide-gray-200">
                 <div className="">
                   <textarea
