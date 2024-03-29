@@ -19,7 +19,7 @@ function Signin({ providers }) {
               alt="twitter logo"
             />
             <p className="text-center text-sm italic my-10">
-              This app is created for learning purposes
+              This app is built to show mikiyas's skill
             </p>
             <button
               onClick={() => signIn(provider.id, { callbackUrl: "/" })}
