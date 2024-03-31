@@ -21,11 +21,11 @@ export default NextAuth({
     // }),
     // ...add more providers here
   ],
-  secret: process.env.SECRET,
+
   pages: {
     signIn: "/auth/signin",
   },
-  secret: process_env_SECRET,
+  secret: process.env.SECRET,
   callbacks: {
     async session({ session, token, user }) {
       session.user.username = session.user.name
