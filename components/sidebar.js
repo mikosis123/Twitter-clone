@@ -49,7 +49,7 @@ export default function Sidebar() {
             onClick={signIn}
             className="bg-blue-400 text-white rounded-full h-12 w-56 font-bold shadow-md hover:brightness-95 text-lg hidden xl:inline"
           >
-            Sign in
+            Sign in now
           </button>
         )}
       </div>
