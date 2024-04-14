@@ -6,7 +6,6 @@ import { HomeIcon } from "@heroicons/react/solid";
 import { useSession, signIn, signOut } from "next-auth/react";
 import {
   BellIcon,
-  BookmarkAltIcon,
   BookmarkIcon,
   ClipboardIcon,
   DotsCircleHorizontalIcon,
@@ -28,7 +27,7 @@ export default function Sidebar() {
       {/* side bar menu items */}
       <div className="mt-4 mb-2.4 xl:item-start">
         <Sidebarmenu text="Home" Icon={HomeIcon} active />
-        <Sidebarmenu text="explore" Icon={HashtagIcon} />
+        <Sidebarmenu text="explore" Icon={HashtagIcon} onClick={signIn} />
 
         {session ? (
           <>
@@ -38,9 +37,15 @@ export default function Sidebar() {
             <Sidebarmenu text="Lists" Icon={ClipboardIcon} />
             <Sidebarmenu text="Profile" Icon={UserIcon} />
             <Sidebarmenu text="More" Icon={DotsCircleHorizontalIcon} />
-            <div>
+            <div className="flex flex-col item-center justify-center">
               <button className="bg-blue-400 text-white rounded-full h-12 w-56 font-bold shadow-md hover:brightness-95 text-lg hidden xl:inline">
                 tweet
+              </button>
+              <button
+                onClick={signOut}
+                className="bg-blue-400 text-white rounded-full mt-4 h-12 w-56 font-bold shadow-md hover:brightness-95 text-lg hidden xl:inline"
+              >
+                sign out
               </button>
             </div>
           </>
@@ -49,7 +54,7 @@ export default function Sidebar() {
             onClick={signIn}
             className="bg-blue-400 text-white rounded-full h-12 w-56 font-bold shadow-md hover:brightness-95 text-lg hidden xl:inline"
           >
-            Sign in now
+            Sign in
           </button>
         )}
       </div>
@@ -61,7 +66,8 @@ export default function Sidebar() {
           className="rounded-full h-10 w-10 mr-2 mr-x-auto"
           height="100"
           width="100"
-          src={isk}
+          src={session?.user.image}
+          alt="profile"
         ></Image>
         <div className="hidden xl:inline">
           <h4 className="text-gray-600">{session?.user.name}</h4>

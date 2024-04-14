@@ -68,7 +68,7 @@ export default function Input() {
             className="rounded-full w-11 h-11 cursor-pointer hover:brightness-95"
             height={50}
             onClick={signOut}
-            src={picture}
+            src={session?.user.image}
             width={50}
           ></Image>
 
